@@ -12,10 +12,12 @@ class Workers extends CI_Controller
 	public function index()
 	{
 		$data['workers'] = $this->workers_model->get_workers();
+		$this->load->view('templates/header');
 		$this->load->view('workers/index', $data);
+		$this->load->view('templates/footer');
 	}
 
-	public function view($id)
+	public function view($id): void
 	{
 		$data['worker'] = $this->workers_model->get_worker($id);
 
@@ -24,7 +26,9 @@ class Workers extends CI_Controller
 			redirect('workers', 'refresh');
 		}
 
+		$this->load->view('templates/header');
 		$this->load->view('workers/view', $data);
+		$this->load->view('templates/footer');
 	}
 
 	public function add()
@@ -42,7 +46,9 @@ class Workers extends CI_Controller
 		$this->form_validation->set_rules('manager_id', 'manager', 'callback_validate_manager');
 
 		if ($this->form_validation->run() === FALSE) {
+			$this->load->view('templates/header');
 			$this->load->view('workers/create', $worker_data);
+			$this->load->view('templates/footer');
 
 		} else {
 			$worker_data = array(
